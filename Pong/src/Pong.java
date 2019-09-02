@@ -10,6 +10,9 @@ import java.awt.Graphics2D;
 import java.awt.Stroke;
 import java.awt.BasicStroke;
 
+import java.awt.Color;
+import java.awt.Rectangle;
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.Timer;
@@ -67,6 +70,8 @@ class Sprite{
 	private int xPosition, yPosition; 
 	private int xVelocity, yVelocity;
 	private int width, height;
+    private int initialXPosition, initialYPosition;
+    private Color colour;
 	
     public int getXPosition() { return xPosition; }
     public int getYPosition() { return yPosition; }
@@ -74,21 +79,29 @@ class Sprite{
     public int getYVelocity() { return yVelocity; }
     public int getWidth() { return width; }
     public int getHeight() { return height; }
+    public Color getColour() { return colour; }
     
     public void setXPosition(int newX) {
         xPosition = newX;
-        if(xPosition < 0) {
-            xPosition = 0;
-        } else if(xPosition + width > getWidth()) { // changing panelWidth to getWidth()
-            xPosition = getWidth() - width;
-        }
     }
     public void setYPosition(int newY) {
         yPosition = newY;
+    }
+    
+    public void setXPosition(int newX, int panelWidth) {
+        xPosition = newX;
+        if(xPosition < 0) {
+            xPosition = 0;
+        } else if(xPosition + width > panelWidth) {
+            xPosition = panelWidth - width;
+        }
+    }
+    public void setYPosition(int newY, int panelHeight) {
+        yPosition = newY;
         if(yPosition < 0) {
             yPosition = 0;
-        } else if(yPosition + height > getHeight()) { // changing panelHeight to getHeight()
-            yPosition = getHeight() - height;
+        } else if(yPosition + height > panelHeight) {
+            yPosition = panelHeight - height;
         }
     }
     
@@ -106,7 +119,10 @@ class Sprite{
         height = newHeight;
     }
     
-    private int initialXPosition, initialYPosition;
+    public void setColour(Color newColour) {
+        colour = newColour;
+    }
+    
     public void setInitialPosition(int initialX, int initialY) {
           initialXPosition = initialX;
           initialYPosition = initialY;
@@ -114,6 +130,10 @@ class Sprite{
     public void resetToInitialPosition() {
          setXPosition(initialXPosition);
          setYPosition(initialYPosition);
+    }
+    
+    public Rectangle getRectangle() {
+        return new Rectangle(getXPosition(), getYPosition(), getWidth(), getHeight());
     }
 }
 
