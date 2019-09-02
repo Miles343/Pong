@@ -7,6 +7,9 @@ import java.awt.event.KeyListener;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 
+import java.awt.Stroke;
+import java.awt.BasicStroke;
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.Timer;
@@ -40,15 +43,78 @@ class PongPanel extends JPanel implements ActionListener, KeyListener{
 	}
 	//adding after here
 	private void update() {
-		
 	}
 	
 	 @Override
 	 public void paintComponent(Graphics g) {
 	     super.paintComponent(g);
+	     paintDottedLine(g);
 	     //g.setColor(Color.WHITE); // only for testing
 	     //g.fillRect(20, 20, 100, 100); // first two position from top left, next 2 the size
 	 }
+	 
+	 private void paintDottedLine(Graphics g) {
+	      Graphics2D g2d = (Graphics2D) g.create();
+	         Stroke dashed = new BasicStroke(3, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[]{9}, 0);
+	         g2d.setStroke(dashed);
+	         g2d.setPaint(Color.WHITE);
+	         g2d.drawLine(getWidth() / 2, 0, getWidth() / 2, getHeight());
+	         g2d.dispose();
+	 }
+}
+
+class Sprite{
+	private int xPosition, yPosition; 
+	private int xVelocity, yVelocity;
+	private int width, height;
+	
+    public int getXPosition() { return xPosition; }
+    public int getYPosition() { return yPosition; }
+    public int getXVelocity() { return xVelocity; }
+    public int getYVelocity() { return yVelocity; }
+    public int getWidth() { return width; }
+    public int getHeight() { return height; }
+    
+    public void setXPosition(int newX) {
+        xPosition = newX;
+        if(xPosition < 0) {
+            xPosition = 0;
+        } else if(xPosition + width > getWidth()) { // changing panelWidth to getWidth()
+            xPosition = getWidth() - width;
+        }
+    }
+    public void setYPosition(int newY) {
+        yPosition = newY;
+        if(yPosition < 0) {
+            yPosition = 0;
+        } else if(yPosition + height > getHeight()) { // changing panelHeight to getHeight()
+            yPosition = getHeight() - height;
+        }
+    }
+    
+    public void setXVelocity(int newXVelocity) {
+        xVelocity = newXVelocity;
+    }
+    public void setYVelocity(int newYVelocity) {
+        yVelocity = newYVelocity;
+    }
+    
+    public void setWidth(int newWidth) {
+        width = newWidth;
+    }
+    public void setHeight(int newHeight) {
+        height = newHeight;
+    }
+    
+    private int initialXPosition, initialYPosition;
+    public void setInitialPosition(int initialX, int initialY) {
+          initialXPosition = initialX;
+          initialYPosition = initialY;
+    }
+    public void resetToInitialPosition() {
+         setXPosition(initialXPosition);
+         setYPosition(initialYPosition);
+    }
 }
 
 public class Pong extends JFrame {
