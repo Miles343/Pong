@@ -6,13 +6,17 @@ import java.awt.event.KeyListener;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.Timer;
 
 class PongPanel extends JPanel implements ActionListener, KeyListener{
 	
 	private final static Color BACKGROUND_COLOUR = Color.BLACK;
+	private final static int TIMER_DELAY = 5;
 	
 	public PongPanel() {
 		setBackground(BACKGROUND_COLOUR);
+		Timer timer = new Timer(TIMER_DELAY, this);
+        timer.start();
 	}
 	@Override
 	public void keyPressed(KeyEvent event) {
@@ -47,7 +51,7 @@ public class Pong extends JFrame {
 	}
 	public static void main(String[] args) {
 		new Pong();
-		//new PongPanel(); doesnt work must be in the Pong constructor window
+		//new PongPanel(); doesn't work must be in the Pong constructor window
 	}
 
 }
