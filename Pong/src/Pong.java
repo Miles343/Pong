@@ -4,6 +4,9 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.Timer;
@@ -32,7 +35,19 @@ class PongPanel extends JPanel implements ActionListener, KeyListener{
 
 	@Override
 	public void actionPerformed(ActionEvent event) {
+		update();
 	}
+	//adding after here
+	private void update() {
+		
+	}
+	
+	 @Override
+	 public void paintComponent(Graphics g) {
+	     super.paintComponent(g);
+	     g.setColor(Color.WHITE);
+	     g.fillRect(20, 20, 100, 100); // first two position from top left, next 2 the size
+	 }
 }
 
 public class Pong extends JFrame {
